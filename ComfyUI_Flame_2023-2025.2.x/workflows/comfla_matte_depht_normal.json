@@ -1,0 +1,110 @@
+{
+  "23": {
+    "inputs": {
+      "torchscript_jit": "default",
+      "image": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "InspyrenetRembg",
+    "_meta": {
+      "title": "Inspyrenet Rembg"
+    }
+  },
+  "30": {
+    "inputs": {
+      "filename_prefix": "comfla/img",
+      "images": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "33": {
+    "inputs": {
+      "invert": true,
+      "image": [
+        "23",
+        0
+      ],
+      "mask": [
+        "23",
+        1
+      ]
+    },
+    "class_type": "Image Premultiply (mtb)",
+    "_meta": {
+      "title": "Image Premultiply (mtb)"
+    }
+  },
+  "34": {
+    "inputs": {
+      "filename_prefix": "comfla/depht",
+      "images": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "38": {
+    "inputs": {
+      "ckpt_name": "depth_anything_vitl14.pth",
+      "resolution": 2160,
+      "image": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "DepthAnythingPreprocessor",
+    "_meta": {
+      "title": "Depth Anything"
+    }
+  },
+  "40": {
+    "inputs": {
+      "scale_XY": 1,
+      "images": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "NormalMapSimple",
+    "_meta": {
+      "title": "Normal Map (Simple)"
+    }
+  },
+  "41": {
+    "inputs": {
+      "filename_prefix": "comfla/normal",
+      "images": [
+        "40",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "46": {
+    "inputs": {
+      "directory": "",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  }
+}

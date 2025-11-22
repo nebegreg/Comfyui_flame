@@ -1,0 +1,40 @@
+{
+  "4": {
+    "inputs": {
+      "torchscript_jit": "default",
+      "image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "InspyrenetRembg",
+    "_meta": {
+      "title": "Inspyrenet Rembg"
+    }
+  },
+  "5": {
+    "inputs": {
+      "directory": "output/flacom/",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "13": {
+    "inputs": {
+      "filename_prefix": "comfla/img",
+      "images": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "23": {
+    "inputs": {
+      "torchscript_jit": "on",
+      "image": [
+        "47",
+        0
+      ]
+    },
+    "class_type": "InspyrenetRembg",
+    "_meta": {
+      "title": "Inspyrenet Rembg"
+    }
+  },
+  "30": {
+    "inputs": {
+      "filename_prefix": "comfla/img",
+      "images": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "33": {
+    "inputs": {
+      "invert": true,
+      "image": [
+        "23",
+        0
+      ],
+      "mask": [
+        "70",
+        0
+      ]
+    },
+    "class_type": "Image Premultiply (mtb)",
+    "_meta": {
+      "title": "Image Premultiply (mtb)"
+    }
+  },
+  "34": {
+    "inputs": {
+      "filename_prefix": "comfla/depht",
+      "images": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "38": {
+    "inputs": {
+      "ckpt_name": "depth_anything_vitl14.pth",
+      "resolution": 2048,
+      "image": [
+        "47",
+        0
+      ]
+    },
+    "class_type": "DepthAnythingPreprocessor",
+    "_meta": {
+      "title": "Depth Anything"
+    }
+  },
+  "41": {
+    "inputs": {
+      "filename_prefix": "comfla/normal",
+      "images": [
+        "80",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "46": {
+    "inputs": {
+      "directory": "",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "47": {
+    "inputs": {
+      "image": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "easy imageBatchToImageList",
+    "_meta": {
+      "title": "Image Batch To Image List"
+    }
+  },
+  "48": {
+    "inputs": {
+      "fov": 60,
+      "iterations": 20,
+      "resolution": 2048,
+      "image": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "DSINE-NormalMapPreprocessor",
+    "_meta": {
+      "title": "DSINE Normal Map"
+    }
+  },
+  "57": {
+    "inputs": {
+      "width": 3840,
+      "height": 2160,
+      "upscale_method": "lanczos",
+      "keep_proportion": true,
+      "divisible_by": 2,
+      "crop": "disabled",
+      "image": [
+        "38",
+        0
+      ],
+      "get_image_size": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "68": {
+    "inputs": {
+      "sam_model": "sam_vit_h (2.56GB)",
+      "grounding_dino_model": "GroundingDINO_SwinT_OGC (694MB)",
+      "threshold": 0.2,
+      "detail_method": "PyMatting",
+      "detail_erode": 38,
+      "detail_dilate": 1,
+      "black_point": 0.15,
+      "white_point": 0.99,
+      "process_detail": true,
+      "prompt": "subject",
+      "device": "cpu",
+      "max_megapixels": 1,
+      "cache_model": true,
+      "image": [
+        "47",
+        0
+      ]
+    },
+    "class_type": "LayerMask: SegmentAnythingUltra V2",
+    "_meta": {
+      "title": "LayerMask: SegmentAnythingUltra V2(Advance)"
+    }
+  },
+  "69": {
+    "inputs": {
+      "erode_dilate": -219,
+      "fill_holes": 0,
+      "remove_isolated_pixels": 0,
+      "smooth": 0,
+      "blur": 0,
+      "mask": [
+        "68",
+        1
+      ]
+    },
+    "class_type": "MaskFix+",
+    "_meta": {
+      "title": "🔧 Mask Fix"
+    }
+  },
+  "70": {
+    "inputs": {
+      "masks_a": [
+        "84",
+        0
+      ],
+      "masks_b": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "Masks Add",
+    "_meta": {
+      "title": "Masks Add"
+    }
+  },
+  "75": {
+    "inputs": {
+      "width": 3840,
+      "height": 2160,
+      "upscale_method": "lanczos",
+      "keep_proportion": false,
+      "divisible_by": 2,
+      "crop": "disabled",
+      "image": [
+        "48",
+        0
+      ],
+      "get_image_size": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "80": {
+    "inputs": {
+      "invert": true,
+      "image": [
+        "83",
+        0
+      ],
+      "mask": [
+        "70",
+        0
+      ]
+    },
+    "class_type": "Image Premultiply (mtb)",
+    "_meta": {
+      "title": "Image Premultiply (mtb)"
+    }
+  },
+  "81": {
+    "inputs": {
+      "scale_XY": 1,
+      "images": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "NormalMapSimple",
+    "_meta": {
+      "title": "Normal Map (Simple)"
+    }
+  },
+  "83": {
+    "inputs": {
+      "invert_mask": true,
+      "blend_mode": "normal",
+      "opacity": 25,
+      "background_image": [
+        "75",
+        0
+      ],
+      "layer_image": [
+        "81",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageBlend",
+    "_meta": {
+      "title": "LayerUtility: ImageBlend"
+    }
+  },
+  "84": {
+    "inputs": {
+      "erode_dilate": -2,
+      "fill_holes": 0,
+      "remove_isolated_pixels": 13,
+      "smooth": 0,
+      "blur": 1,
+      "mask": [
+        "23",
+        1
+      ]
+    },
+    "class_type": "MaskFix+",
+    "_meta": {
+      "title": "🔧 Mask Fix"
+    }
+  },
+  "85": {
+    "inputs": {
+      "ckpt_name": "depth_anything_v2_vitl.pth",
+      "resolution": 2048,
+      "image": [
+        "47",
+        0
+      ]
+    },
+    "class_type": "DepthAnythingV2Preprocessor",
+    "_meta": {
+      "title": "Depth Anything V2 - Relative"
+    }
+  },
+  "86": {
+    "inputs": {
+      "width": 3840,
+      "height": 2160,
+      "upscale_method": "lanczos",
+      "keep_proportion": true,
+      "divisible_by": 2,
+      "crop": "disabled",
+      "image": [
+        "85",
+        0
+      ],
+      "get_image_size": [
+        "47",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "87": {
+    "inputs": {
+      "invert_mask": true,
+      "blend_mode": "normal",
+      "opacity": 25,
+      "background_image": [
+        "57",
+        0
+      ],
+      "layer_image": [
+        "86",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageBlend",
+    "_meta": {
+      "title": "LayerUtility: ImageBlend"
+    }
+  }
+}
