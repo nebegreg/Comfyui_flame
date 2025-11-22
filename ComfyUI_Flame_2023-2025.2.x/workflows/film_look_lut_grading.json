@@ -1,0 +1,119 @@
+{
+  "1": {
+    "inputs": {
+      "directory": "",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "2": {
+    "inputs": {
+      "image": ["1", 0]
+    },
+    "class_type": "ImpactImageBatchToImageList",
+    "_meta": {
+      "title": "Batch to Image List"
+    }
+  },
+  "3": {
+    "inputs": {
+      "temperature": 0,
+      "hue": 0,
+      "brightness": 0,
+      "contrast": 1.0,
+      "saturation": 1.0,
+      "gamma": 1.0,
+      "image": ["2", 0]
+    },
+    "class_type": "ImageBatchColorAdjust",
+    "_meta": {
+      "title": "Color Temperature & Contrast Pre-Adjustment"
+    }
+  },
+  "4": {
+    "inputs": {
+      "lut_file": "Cinematic_Teal_Orange.cube",
+      "intensity": 0.8,
+      "gamma": 1.0,
+      "log_mode": false,
+      "image": ["3", 0]
+    },
+    "class_type": "LayerColor: LUT Apply",
+    "_meta": {
+      "title": "Apply LUT (Film Look)"
+    }
+  },
+  "5": {
+    "inputs": {
+      "grain_amount": 0.02,
+      "grain_size": 1.5,
+      "monochrome": false,
+      "image": ["4", 0]
+    },
+    "class_type": "FilmGrain",
+    "_meta": {
+      "title": "Film Grain Addition"
+    }
+  },
+  "6": {
+    "inputs": {
+      "vignette_strength": 0.3,
+      "vignette_radius": 0.7,
+      "feather": 0.5,
+      "image": ["5", 0]
+    },
+    "class_type": "VignetteEffect",
+    "_meta": {
+      "title": "Subtle Vignette"
+    }
+  },
+  "7": {
+    "inputs": {
+      "lift": [0.0, 0.0, 0.0],
+      "gamma": [1.0, 1.0, 1.0],
+      "gain": [1.0, 1.0, 1.0],
+      "offset": [0.0, 0.0, 0.0],
+      "image": ["6", 0]
+    },
+    "class_type": "ColorWheelsGrading",
+    "_meta": {
+      "title": "Fine Color Wheels Adjustment"
+    }
+  },
+  "8": {
+    "inputs": {
+      "sharpen_amount": 0.1,
+      "radius": 1.0,
+      "threshold": 0.0,
+      "image": ["7", 0]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "Subtle Sharpen"
+    }
+  },
+  "9": {
+    "inputs": {
+      "images": ["8", 0]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Graded Look"
+    }
+  },
+  "10": {
+    "inputs": {
+      "filename_prefix": "comfla/graded",
+      "images": ["8", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Graded Sequence"
+    }
+  }
+}
