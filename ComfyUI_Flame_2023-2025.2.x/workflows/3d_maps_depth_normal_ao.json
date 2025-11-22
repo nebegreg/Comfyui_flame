@@ -1,0 +1,144 @@
+{
+  "1": {
+    "inputs": {
+      "directory": "",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "2": {
+    "inputs": {
+      "image": ["1", 0]
+    },
+    "class_type": "easy imageBatchToImageList",
+    "_meta": {
+      "title": "Image Batch To Image List"
+    }
+  },
+  "3": {
+    "inputs": {
+      "ckpt_name": "depth_anything_v2_vitl.pth",
+      "resolution": 2048,
+      "image": ["2", 0]
+    },
+    "class_type": "DepthAnythingV2Preprocessor",
+    "_meta": {
+      "title": "Depth Anything V2 - Relative"
+    }
+  },
+  "4": {
+    "inputs": {
+      "width": 3840,
+      "height": 2160,
+      "upscale_method": "lanczos",
+      "keep_proportion": true,
+      "divisible_by": 2,
+      "crop": "disabled",
+      "image": ["3", 0],
+      "get_image_size": ["2", 0]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Depth to Original"
+    }
+  },
+  "5": {
+    "inputs": {
+      "fov": 60,
+      "iterations": 20,
+      "resolution": 2048,
+      "image": ["2", 0]
+    },
+    "class_type": "DSINE-NormalMapPreprocessor",
+    "_meta": {
+      "title": "DSINE Normal Map"
+    }
+  },
+  "6": {
+    "inputs": {
+      "width": 3840,
+      "height": 2160,
+      "upscale_method": "lanczos",
+      "keep_proportion": false,
+      "divisible_by": 2,
+      "crop": "disabled",
+      "image": ["5", 0],
+      "get_image_size": ["2", 0]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Normal to Original"
+    }
+  },
+  "7": {
+    "inputs": {
+      "scale_XY": 1.0,
+      "images": ["2", 0]
+    },
+    "class_type": "NormalMapSimple",
+    "_meta": {
+      "title": "Normal Map (Simple - Alternative)"
+    }
+  },
+  "8": {
+    "inputs": {
+      "invert_mask": true,
+      "blend_mode": "normal",
+      "opacity": 25,
+      "background_image": ["6", 0],
+      "layer_image": ["7", 0]
+    },
+    "class_type": "LayerUtility: ImageBlend",
+    "_meta": {
+      "title": "Blend Normal Maps"
+    }
+  },
+  "9": {
+    "inputs": {
+      "radius": 0.5,
+      "intensity": 1.0,
+      "samples": 16,
+      "depth_map": ["4", 0],
+      "normal_map": ["8", 0]
+    },
+    "class_type": "AmbientOcclusionGenerator",
+    "_meta": {
+      "title": "Generate Ambient Occlusion"
+    }
+  },
+  "10": {
+    "inputs": {
+      "filename_prefix": "comfla/depth",
+      "images": ["4", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Depth Maps"
+    }
+  },
+  "11": {
+    "inputs": {
+      "filename_prefix": "comfla/normal",
+      "images": ["8", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Normal Maps"
+    }
+  },
+  "12": {
+    "inputs": {
+      "filename_prefix": "comfla/ao",
+      "images": ["9", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Ambient Occlusion"
+    }
+  }
+}

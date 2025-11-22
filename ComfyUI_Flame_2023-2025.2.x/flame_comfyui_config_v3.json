@@ -1,0 +1,182 @@
+{
+  "version": "3.0",
+  "last_updated": "2025-11-22",
+
+  "comfyui": {
+    "url": "http://127.0.0.1:8188",
+    "websocket_url": "ws://127.0.0.1:8188/ws",
+    "timeout": 7200,
+    "auto_reconnect": true,
+    "max_retries": 3,
+    "retry_delay": 5,
+    "health_check_interval": 30
+  },
+
+  "paths": {
+    "workflows_dir": "/opt/Autodesk/shared/python/comfyui_workflows",
+    "presets_dir": "/opt/Autodesk/shared/python/comfyui_presets",
+    "temp_dir": "/tmp/flame_comfyui",
+    "cache_dir": "/tmp/flame_comfyui_cache",
+    "input_dir": "~/comfyui/input/flacom",
+    "output_dir": "~/comfyui/output",
+    "lut_dir": "~/comfyui/luts"
+  },
+
+  "processing": {
+    "queue_mode": "sequential",
+    "max_parallel_jobs": 2,
+    "auto_import_results": true,
+    "cleanup_temp_files": true,
+    "keep_cache_days": 7,
+    "enable_preview": true,
+    "preview_interval": 2.0
+  },
+
+  "ui": {
+    "show_live_preview": true,
+    "preview_refresh_rate": 2,
+    "show_progress_bar": true,
+    "show_eta": true,
+    "show_node_info": true,
+    "preview_size": [640, 360],
+    "favorite_workflows": [
+      "temporal_coherence_animatediff.json",
+      "film_look_lut_grading.json",
+      "rife_frame_interpolation.json",
+      "advanced_chroma_key.json"
+    ]
+  },
+
+  "export": {
+    "default_format": "auto",
+    "formats": {
+      "auto": {
+        "description": "Automatically select best format",
+        "enabled": true
+      },
+      "jpeg": {
+        "quality": 95,
+        "bit_depth": 8,
+        "use_for": ["style_transfer", "color_grading", "preview"]
+      },
+      "png": {
+        "bit_depth": 16,
+        "compression": 3,
+        "use_for": ["keying", "general"]
+      },
+      "exr": {
+        "bit_depth": 16,
+        "compression": "zip",
+        "use_for": ["depth_maps", "normal_maps", "finishing"]
+      },
+      "dpx": {
+        "bit_depth": 10,
+        "use_for": ["film_output", "color_critical"]
+      }
+    },
+    "color_space": "linear",
+    "include_alpha": true,
+    "frame_padding": 5
+  },
+
+  "workflows": {
+    "categories": {
+      "temporal": {
+        "name": "Temporal Processing",
+        "workflows": [
+          "temporal_coherence_animatediff.json",
+          "rife_frame_interpolation.json",
+          "temporal_super_resolution.json"
+        ]
+      },
+      "color": {
+        "name": "Color Grading",
+        "workflows": [
+          "film_look_lut_grading.json",
+          "cinematic_teal_orange.json",
+          "vintage_film_emulation.json"
+        ]
+      },
+      "keying": {
+        "name": "Keying & Matting",
+        "workflows": [
+          "advanced_chroma_key.json",
+          "ai_background_removal.json",
+          "video_matting_sequence.json"
+        ]
+      },
+      "3d": {
+        "name": "3D & Depth",
+        "workflows": [
+          "3d_maps_depth_normal_ao.json",
+          "depth_aware_compositing.json"
+        ]
+      },
+      "enhancement": {
+        "name": "Enhancement",
+        "workflows": [
+          "flux_4x_8x_upscale.json",
+          "face_restoration_enhancement.json",
+          "detail_enhancement.json"
+        ]
+      },
+      "generation": {
+        "name": "AI Generation",
+        "workflows": [
+          "nvidia_cosmos_video_gen.json",
+          "flux_ipadapter_style_transfer.json",
+          "ai_background_replacement.json"
+        ]
+      }
+    }
+  },
+
+  "advanced": {
+    "enable_websocket_monitor": true,
+    "log_level": "INFO",
+    "log_file": "/tmp/flame_comfyui_v3.log",
+    "cache_workflows": true,
+    "validate_workflows": true,
+    "enable_gpu_optimization": true,
+    "max_memory_usage_gb": 16,
+    "enable_analytics": false
+  },
+
+  "models": {
+    "flux": {
+      "enabled": true,
+      "model_path": "flux.1-dev.safetensors",
+      "vae_path": "ae.safetensors"
+    },
+    "animatediff": {
+      "enabled": true,
+      "motion_module": "mm_sd_v15_v2.ckpt",
+      "use_freeinit": true
+    },
+    "rife": {
+      "enabled": true,
+      "version": "4.9",
+      "fast_mode": true
+    },
+    "depth": {
+      "model": "depth_anything_v2_vitl.pth",
+      "resolution": 2048
+    },
+    "normal": {
+      "model": "dsine",
+      "iterations": 20
+    },
+    "upscale": {
+      "model": "4x-ClearRealityV2.pth",
+      "tile_size": 1024,
+      "overlap": 128
+    }
+  },
+
+  "experimental": {
+    "enable_cosmos": false,
+    "enable_video_matting": true,
+    "enable_optical_flow": true,
+    "enable_multi_gpu": false
+  }
+}

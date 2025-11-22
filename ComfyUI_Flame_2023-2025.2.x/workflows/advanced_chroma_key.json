@@ -1,0 +1,110 @@
+{
+  "1": {
+    "inputs": {
+      "directory": "",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "2": {
+    "inputs": {
+      "image": ["1", 0]
+    },
+    "class_type": "ImpactImageBatchToImageList",
+    "_meta": {
+      "title": "Batch to Image List"
+    }
+  },
+  "3": {
+    "inputs": {
+      "chroma_color": "green",
+      "tolerance": 0.15,
+      "spill_suppression": 0.9,
+      "edge_feathering": 3.0,
+      "despill_strength": 0.8,
+      "edge_blur": 1.5,
+      "image": ["2", 0]
+    },
+    "class_type": "GeekyRemB_ChromaKey",
+    "_meta": {
+      "title": "Advanced Chroma Key"
+    }
+  },
+  "4": {
+    "inputs": {
+      "erode_dilate": -2,
+      "fill_holes": 5,
+      "remove_isolated_pixels": 3,
+      "smooth": 2,
+      "blur": 1,
+      "mask": ["3", 1]
+    },
+    "class_type": "MaskFix+",
+    "_meta": {
+      "title": "🔧 Mask Fix"
+    }
+  },
+  "5": {
+    "inputs": {
+      "expand": 2,
+      "incremental_expandrate": 0,
+      "tapered_corners": true,
+      "flip_input": false,
+      "blur_radius": 3,
+      "lerp_alpha": 1,
+      "decay_factor": 1,
+      "fill_holes": true,
+      "mask": ["4", 0]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "Grow Mask With Blur (Edge Refinement)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "invert": true,
+      "image": ["3", 0],
+      "mask": ["5", 0]
+    },
+    "class_type": "Image Premultiply (mtb)",
+    "_meta": {
+      "title": "Image Premultiply (Create RGBA)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mask": ["5", 0]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "8": {
+    "inputs": {
+      "filename_prefix": "comfla/keyed_img",
+      "images": ["6", 0],
+      "mask": ["5", 0]
+    },
+    "class_type": "SaveImageWithAlpha",
+    "_meta": {
+      "title": "Save Image With Alpha Channel"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "comfla/matte",
+      "images": ["7", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Matte (Grayscale)"
+    }
+  }
+}
