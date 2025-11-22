@@ -1,0 +1,60 @@
+# ComfyUI-Flame Integration v3.0 - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core dependencies (usually bundled with Flame/ComfyUI)
+# ------------------------------------------------------
+
+# Image processing
+Pillow>=10.0.0
+
+# HTTP requests
+requests>=2.31.0
+
+# WebSocket support for real-time progress monitoring
+websocket-client>=1.6.0
+
+# JSON handling (built-in, listed for reference)
+# json (built-in)
+
+# Threading and queue (built-in)
+# threading (built-in)
+# queue (built-in)
+
+# Optional but recommended
+# ------------------------------------------------------
+
+# For enhanced image format support
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+
+# For advanced image operations
+opencv-python>=4.8.0
+
+# For EXIF data handling
+piexif>=1.1.3
+
+# For color management
+colour-science>=0.4.2
+
+# For faster JSON parsing
+ujson>=5.8.0
+
+# Development dependencies (optional)
+# ------------------------------------------------------
+
+# For code formatting
+# black>=23.0.0
+
+# For linting
+# pylint>=2.17.0
+
+# For type checking
+# mypy>=1.5.0
+
+# Notes:
+# ------
+# 1. Most dependencies are already satisfied by ComfyUI installation
+# 2. websocket-client is the main NEW requirement for v3.0
+# 3. Install in ComfyUI's virtual environment if using one:
+#    source ~/ComfyUI/venv/bin/activate
+#    pip install -r requirements.txt
