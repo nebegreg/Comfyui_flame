@@ -1,0 +1,10 @@
+{
+    "comfyui_url": "http://127.0.0.1:8188",
+    "input_dir": "/Users/xteve/comfyui/output/flacom",
+    "output_dir": "/Users/xteve/comfyui/output",
+    "workflows_dir": "/opt/Autodesk/shared/python/workflows",
+    "temp_dir": "/tmp/flame_comfyui",
+    "last_used_workflow": "klaus.json",
+    "last_workflow": "flacom_rembg_comfla_api_workflow.json",
+    "last_prompt": ""
+}
