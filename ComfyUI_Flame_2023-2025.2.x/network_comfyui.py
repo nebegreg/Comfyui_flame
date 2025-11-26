@@ -1380,8 +1380,10 @@ def import_sequence_to_flame(directory_path):
         log_to_file(traceback.format_exc())
         return False
 
+# REMOVED DUPLICATE FUNCTION - See line 3117 for the actual implementation
+# This duplicate was causing conflicts in Flame 2026
 # Updated process_with_comfyui function to import results
-def process_with_comfyui(selection):
+def process_with_comfyui_DUPLICATE_REMOVED(selection):
     """Process selected clips with ComfyUI and import results"""
     log_to_file(f"process_with_comfyui called with {len(selection)} items")
     
@@ -1585,12 +1587,16 @@ if __name__ == "__main__":
 
 def log_flame_methods():
     """Log available methods in the flame module for debugging."""
-    log_to_file("Available methods in flame module:")
-    for method in dir(flame):
-        log_to_file(method)
+    try:
+        log_to_file("Available methods in flame module:")
+        for method in dir(flame):
+            log_to_file(method)
+    except Exception as e:
+        log_to_file(f"Could not log flame methods: {str(e)}")
 
 # Call this function at the start of your script to log available methods
-log_flame_methods()
+# COMMENTED OUT - This was causing hook to fail loading in Flame 2026
+# log_flame_methods()
 
 # Load the workflow from the JSON file - fixed to use absolute paths properly
 def load_workflow(workflow_path=None):
@@ -2194,8 +2200,9 @@ def show_workflow_selection_dialog():
         log_to_file(traceback.format_exc())
         return None
 
+# REMOVED DUPLICATE FUNCTION - See line 2734 for the actual implementation
 # Function to show text input dialog
-def show_text_input_dialog(text_nodes, workflow_name):
+def show_text_input_dialog_DUPLICATE_REMOVED(text_nodes, workflow_name):
     """
     Display a dialog for the user to input text for each text node.
     
@@ -2313,8 +2320,9 @@ def show_text_input_dialog(text_nodes, workflow_name):
         log_to_file(traceback.format_exc())
         return None
 
+# REMOVED DUPLICATE FUNCTION - See line 2690 for the actual implementation
 # Function to update workflow with new text inputs
-def update_workflow_with_text_inputs(workflow, text_values):
+def update_workflow_with_text_inputs_DUPLICATE_REMOVED(workflow, text_values):
     """
     Update the workflow with new text input values.
     Now uses deep copy and handles custom input fields.
@@ -2365,8 +2373,10 @@ def get_workflow_name(workflow_path):
     except:
         return "Workflow"
 
+# REMOVED DUPLICATE FUNCTION - See line 2851 for the actual implementation
+# This duplicate was causing conflicts in Flame 2026
 # Create a new version of process_with_comfyui_api that accepts a workflow object
-def process_with_comfyui_api_with_workflow(image_path, output_dir, workflow):
+def process_with_comfyui_api_with_workflow_DUPLICATE_REMOVED(image_path, output_dir, workflow):
     """Process an image sequence with ComfyUI API using a provided workflow"""
     try:
         log_to_file(f"Processing sequence with ComfyUI. First image: {image_path}")
