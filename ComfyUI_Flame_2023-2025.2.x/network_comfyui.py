@@ -625,34 +625,89 @@ class PyFlameDialogWindow(QtWidgets.QDialog):
         header_gradient.setColorAt(1, QtGui.QColor(50, 50, 50, 0))
         painter.fillRect(QtCore.QRect(0, 0, self.width(), 15), header_gradient)
 
-# Configuration file location
-CONFIG_FILE = "/opt/Autodesk/shared/python/flame_comfyui_config.json"
+# Configuration discovery
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PRODUCTION_CONFIG_PATH = "/opt/Autodesk/shared/python/flame_comfyui_config.json"
+LOCAL_CONFIG_PATH = os.path.join(SCRIPT_DIR, "flame_comfyui_config.json")
+CONFIG_SEARCH_PATHS = [
+    os.getenv("FLAME_COMFYUI_CONFIG"),
+    PRODUCTION_CONFIG_PATH,
+    LOCAL_CONFIG_PATH,
+]
 
 # Default configuration values
+def _default_workflows_dir():
+    """Choose a usable workflows directory, preferring the bundled one."""
+    bundled_dir = os.path.join(SCRIPT_DIR, "workflows")
+    if os.path.isdir(bundled_dir):
+        return bundled_dir
+    return "/opt/Autodesk/shared/python/comfyui_workflows"
+
+
 DEFAULT_CONFIG = {
     "comfyui_url": "http://127.0.0.1:8188",
-    "input_dir": os.path.expanduser("~/comfyui/output/flacom"),
-    "output_dir": os.path.expanduser("~/comfyui/output"),
-    "workflows_dir": "/opt/Autodesk/shared/python/workflows",
-    "temp_dir": "/tmp/flame_comfyui"
+    # Keep default paths aligned with the production config shipped in this repo.
+    # The previous lowercase "comfyui" directory name prevented the hook from
+    # finding exported frames on a fresh installation where ComfyUI uses a
+    # capitalized folder by default.
+    "input_dir": "~/ComfyUI/output/flacom",
+    "output_dir": "~/ComfyUI/output",
+    # Match the bundled config path so workflow discovery works even before the
+    # config file is created on disk.
+    "workflows_dir": _default_workflows_dir(),
+    "temp_dir": "/tmp/flame_comfyui",
 }
+
+
+def _normalize_path(path):
+    return os.path.abspath(os.path.expandvars(os.path.expanduser(path)))
+
+
+def _normalize_config_paths(config):
+    normalized = config.copy()
+    for key in ("input_dir", "output_dir", "workflows_dir", "temp_dir"):
+        if key in normalized:
+            normalized[key] = _normalize_path(normalized[key])
+    return normalized
+
+
+def _pick_config_file():
+    """Return the first usable config path, preferring existing files."""
+    existing_paths = [p for p in CONFIG_SEARCH_PATHS if p and os.path.exists(p)]
+    if existing_paths:
+        return existing_paths[0]
+    # If nothing exists yet, write to the first defined path
+    for candidate in CONFIG_SEARCH_PATHS:
+        if candidate:
+            return candidate
+    return PRODUCTION_CONFIG_PATH
+
+
+# Configuration file location
+CONFIG_FILE = _pick_config_file()
+
 
 # Load configuration from file or use defaults
 def load_config():
     """Load configuration from JSON file or return defaults if file doesn't exist"""
     try:
-        if os.path.exists(CONFIG_FILE):
-            with open(CONFIG_FILE, 'r') as f:
-                config = json.load(f)
-                # Ensure all required keys exist, use defaults for missing ones
-                for key, value in DEFAULT_CONFIG.items():
-                    if key not in config:
-                        config[key] = value
-                return config
+        for candidate in CONFIG_SEARCH_PATHS:
+            if candidate and os.path.exists(candidate):
+                with open(candidate, 'r') as f:
+                    config = json.load(f)
+                break
         else:
-            return DEFAULT_CONFIG.copy()
+            config = DEFAULT_CONFIG.copy()
+
+        # Ensure all required keys exist, use defaults for missing ones
+        for key, value in DEFAULT_CONFIG.items():
+            if key not in config:
+                config[key] = value
+
+        return _normalize_config_paths(config)
     except Exception as e:
-        return DEFAULT_CONFIG.copy()
+        return _normalize_config_paths(DEFAULT_CONFIG)
+
 
 # Load configuration at startup
 CONFIG = load_config()
