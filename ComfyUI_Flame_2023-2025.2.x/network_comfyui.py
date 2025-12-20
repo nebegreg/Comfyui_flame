@@ -631,9 +631,15 @@ CONFIG_FILE = "/opt/Autodesk/shared/python/flame_comfyui_config.json"
 # Default configuration values
 DEFAULT_CONFIG = {
     "comfyui_url": "http://127.0.0.1:8188",
-    "input_dir": os.path.expanduser("~/comfyui/output/flacom"),
-    "output_dir": os.path.expanduser("~/comfyui/output"),
-    "workflows_dir": "/opt/Autodesk/shared/python/workflows",
+    # Keep default paths aligned with the production config shipped in this repo.
+    # The previous lowercase "comfyui" directory name prevented the hook from
+    # finding exported frames on a fresh installation where ComfyUI uses a
+    # capitalized folder by default.
+    "input_dir": os.path.expanduser("~/ComfyUI/output/flacom"),
+    "output_dir": os.path.expanduser("~/ComfyUI/output"),
+    # Match the bundled config path so workflow discovery works even before the
+    # config file is created on disk.
+    "workflows_dir": "/opt/Autodesk/shared/python/comfyui_workflows",
     "temp_dir": "/tmp/flame_comfyui"
 }
 
